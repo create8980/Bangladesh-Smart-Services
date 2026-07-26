@@ -1,0 +1,15 @@
+Bangladesh-Smart-Services/
+│
+├── index.html
+├── about.html
+├── services.html
+├── contact.html
+├── css/
+│   └── style.css
+├── js/
+│   └── script.js
+├── assets/
+│   ├── logo.png
+│   ├── hero-bg.jpg
+│   └── icons/
+└── README.md
