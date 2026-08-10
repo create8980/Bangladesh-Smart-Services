@@ -107,12 +107,44 @@ let users=JSON.parse(localStorage.getItem("voyagoDemoUsers")||"[]"),current=JSON
 function tab(id,b){document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".form").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(id).classList.add("active")}
 function openModal(type){
 let c=document.getElementById("modalContent");
-if(type==="login")c.innerHTML='<h2>Login to Voyago</h2><p>Demo account system</p><input id="lemail" type="email" placeholder="Email"><input id="lpass" type="password" placeholder="Password"><button class="btn orange" style="width:100%;margin-top:8px" onclick="login()">Login</button><p style="text-align:center;margin-top:12px">New user? <a href="#" onclick="openModal(\\'signup\\')" style="color:#0b7ea4">Create account</a></p>';
-else c.innerHTML='<h2>Create your account</h2><p>Sign up for faster booking.</p><input id="sname" placeholder="Full name"><input id="semail" type="email" placeholder="Email"><input id="sphone" placeholder="Phone number"><input id="spass" type="password" placeholder="Password"><button class="btn orange" style="width:100%;margin-top:8px" onclick="signup()">Create account</button>';
+if(type==="login")c.innerHTML='<h2>Login to Voyago</h2><p>Demo account system</p><input id="lcontact" placeholder="Email or mobile number"><input id="lpass" type="password" placeholder="Password"><button class="btn orange" style="width:100%;margin-top:8px" onclick="sendLoginOTP()">Send OTP & Continue</button><p style="text-align:center;margin-top:12px">New user? <a href="#" onclick="openModal(\\'signup\\')" style="color:#0b7ea4">Create account</a></p>';
+else c.innerHTML='<h2>Create your account</h2><p>Sign up with OTP verification.</p><input id="sname" placeholder="Full name"><input id="semail" type="email" placeholder="Email"><input id="sphone" placeholder="Phone number"><input id="spass" type="password" placeholder="Password"><button class="btn orange" style="width:100%;margin-top:8px" onclick="sendSignupOTP()">Send OTP & Verify</button>';
 document.getElementById("modal").classList.add("show")}
 function closeModal(){document.getElementById("modal").classList.remove("show")}
-function signup(){let u={name:sname.value,email:semail.value,phone:sphone.value,password:spass.value};if(!u.name||!u.email||!u.password)return alert("Please complete all fields.");users.push(u);localStorage.setItem("voyagoDemoUsers",JSON.stringify(users));current=u;localStorage.setItem("voyagoDemoCurrent",JSON.stringify(u));closeModal();showDashboard()}
-function login(){let u=users.find(x=>x.email===lemail.value&&x.password===lpass.value);if(!u)return alert("Demo account not found. Please Sign Up first.");current=u;localStorage.setItem("voyagoDemoCurrent",JSON.stringify(u));closeModal();showDashboard()}
+function demoOTP(){return String(Math.floor(100000+Math.random()*900000))}
+function showOTPForm(mode,otp){
+ const c=document.getElementById("modalContent");
+ const destination=mode==="login"?document.getElementById("lcontact").value:document.getElementById("semail").value;
+ window.demoOtp=otp; window.otpMode=mode;
+ c.innerHTML=`<h2>Verify OTP</h2><p>We sent a 6-digit OTP to <b>${destination}</b>.</p>
+ <div class="notice" style="margin-bottom:12px">Demo mode: your OTP is <b style="font-size:20px">${otp}</b>. In production this code will be sent by SMS/email through a real OTP service.</div>
+ <input id="otpInput" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit OTP">
+ <button class="btn orange" style="width:100%;margin-top:8px" onclick="verifyOTP()">Verify & Login</button>
+ <button class="btn" style="width:100%;margin-top:8px;background:#edf2f4" onclick="resendOTP()">Resend OTP</button>`;
+}
+function sendLoginOTP(){
+ const contact=document.getElementById("lcontact").value.trim(), pass=document.getElementById("lpass").value;
+ if(!contact||!pass){alert("Enter your email/mobile and password.");return}
+ const u=users.find(x=>x.email===contact||x.phone===contact);
+ if(!u||u.password!==pass){alert("Account not found or password is incorrect.");return}
+ window.pendingUser=u; showOTPForm("login",demoOTP());
+}
+function sendSignupOTP(){
+ const u={name:document.getElementById("sname").value.trim(),email:document.getElementById("semail").value.trim(),phone:document.getElementById("sphone").value.trim(),password:document.getElementById("spass").value};
+ if(!u.name||!u.email||!u.phone||!u.password){alert("Please complete all fields.");return}
+ if(users.some(x=>x.email===u.email||x.phone===u.phone)){alert("An account already exists with this email/mobile.");return}
+ window.pendingUser=u; showOTPForm("signup",demoOTP());
+}
+function verifyOTP(){
+ const entered=document.getElementById("otpInput").value.trim();
+ if(entered!==window.demoOtp){alert("Incorrect OTP. Please try again.");return}
+ if(window.otpMode==="signup"){
+   users.push(window.pendingUser);localStorage.setItem("voyagoDemoUsers",JSON.stringify(users));
+ }
+ current=window.pendingUser;localStorage.setItem("voyagoDemoCurrent",JSON.stringify(current));
+ closeModal();showDashboard();
+}
+function resendOTP(){showOTPForm(window.otpMode,demoOTP())}
 function showDashboard(){document.querySelectorAll("main section").forEach(x=>{if(x.id!=="userDash")x.style.display="none"});document.getElementById("userDash").style.display="block";document.getElementById("hello").textContent="Welcome, "+current.name;window.scrollTo(0,0)}
 function logout(){current=null;localStorage.removeItem("voyagoDemoCurrent");location.reload()}
 function book(name){if(!current){openModal("login");return}alert("Demo booking: "+name+"\\n\\nBooking request created for "+current.name+".")}
