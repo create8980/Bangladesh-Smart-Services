@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voyago Travel — Demo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f5f8fa;color:#172a35;line-height:1.5}a{text-decoration:none;color:inherit}.wrap{width:min(1150px,92%);margin:auto}
+header{background:#082d3d;color:#fff;position:sticky;top:0;z-index:20}.nav{height:72px;display:flex;align-items:center;justify-content:space-between}.logo{font-size:27px;font-weight:900}.logo span{color:#ff8b3d}nav{display:flex;gap:22px;align-items:center}nav a{font-weight:700}.btn{border:0;border-radius:8px;padding:11px 17px;font-weight:800;cursor:pointer}.orange{background:#ff7b22;color:#fff}.light{background:#fff;color:#082d3d}.hero{min-height:570px;background:linear-gradient(90deg,#062b3bed,#062b3d55),url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85") center/cover;color:white;display:flex;align-items:center}.hero h1{font-size:60px;line-height:1.05;margin:12px 0}.hero h1 span{color:#ff984e}.hero p{max-width:650px;font-size:18px;color:#e1edf1;margin-bottom:25px}.booking{margin-top:-50px;position:relative;background:#fff;border-radius:15px;padding:22px;box-shadow:0 15px 45px #0002}.tabs{display:flex;gap:25px;border-bottom:1px solid #e2e8eb;margin-bottom:18px}.tab{padding:10px 3px;border:0;background:none;font-weight:800;cursor:pointer;color:#71838c}.tab.active{color:#0b7ea4;border-bottom:3px solid #0b7ea4}.form{display:none;grid-template-columns:repeat(6,1fr);gap:9px}.form.active{display:grid}.field{border:1px solid #e1e7ea;border-radius:8px;padding:8px}.field label{display:block;font-size:10px;color:#778890;font-weight:900;text-transform:uppercase}.field input,.field select{width:100%;border:0;outline:0;padding:3px;background:white}.section{padding:80px 0}.alt{background:#edf5f7}.head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:30px}.head h2{font-size:36px;color:#082d3d}.head p{max-width:480px;color:#667985}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:#fff;border:1px solid #e1e8eb;border-radius:13px;overflow:hidden}.card img{width:100%;height:190px;object-fit:cover}.card-body{padding:18px}.tag{display:inline-block;background:#eaf7f8;color:#0b7ea4;border-radius:5px;padding:4px 8px;font-size:11px;font-weight:800}.card h3{color:#082d3d;margin:9px 0}.card p{color:#667985;font-size:14px}.price{font-weight:900;font-size:21px;margin:12px 0;color:#082d3d}.services{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.service{background:#fff;border:1px solid #e1e8eb;padding:24px;border-radius:12px}.service b{font-size:18px;color:#082d3d}.service div{font-size:30px;margin-bottom:8px}.modal{position:fixed;inset:0;background:#001d28aa;display:none;place-items:center;z-index:50;padding:15px}.modal.show{display:grid}.box{background:white;width:min(460px,100%);border-radius:15px;padding:28px;max-height:90vh;overflow:auto}.box h2{color:#082d3d;margin-bottom:8px}.box p{color:#667985;margin-bottom:15px}.box input,.box select{width:100%;padding:12px;border:1px solid #dfe7ea;border-radius:8px;margin:6px 0;font:inherit}.close{float:right;border:0;background:none;font-size:25px;cursor:pointer}.dash{display:none}.dash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat,.panel{background:white;border:1px solid #e1e8eb;border-radius:12px;padding:20px}.stat small{color:#667985}.stat b{display:block;font-size:28px;color:#082d3d}.panel{margin-top:15px}.row{display:flex;justify-content:space-between;gap:15px;border-top:1px solid #e5eaed;padding:14px 0}.status{padding:4px 8px;border-radius:20px;font-size:11px;font-weight:bold;background:#e8f7ef;color:#16804b}.admin{display:none;background:#eef4f6;min-height:500px}.admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.admin-card{background:white;padding:20px;border-radius:12px;border:1px solid #dfe7ea}.admin-card b{font-size:25px;display:block;color:#082d3d}.notice{background:#fff7e7;border:1px solid #f3d58d;padding:15px;border-radius:10px;margin-top:15px;color:#805d14}
+footer{background:#082d3d;color:#bcd0d8;padding:35px 0;text-align:center}
+@media(max-width:900px){nav a:not(.account){display:none}.form{grid-template-columns:1fr 1fr}.grid,.services{grid-template-columns:1fr 1fr}.admin-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.hero h1{font-size:43px}.form,.grid,.services,.stats,.admin-grid{grid-template-columns:1fr}.head{display:block}.head p{margin-top:8px}.nav{height:65px}.logo{font-size:23px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap nav">
+<a class="logo" href="#" onclick="home()">Voya<span>go</span></a>
+<nav>
+<a href="#flights">Flights</a><a href="#hotels">Hotels</a><a href="#tours">Tours</a>
+<a href="#services">Services</a>
+<button class="btn light account" onclick="openModal('login')">Login</button>
+<button class="btn orange account" onclick="openModal('signup')">Sign Up</button>
+</nav>
+</div>
+</header>
+
+<section id="home" class="hero">
+<div class="wrap">
+<div style="color:#ff9a50;font-weight:900;text-transform:uppercase;letter-spacing:1px">✈ Travel smarter</div>
+<h1>Explore the world.<br><span>Your way.</span></h1>
+<p>International flights, hotels, tour packages, visa assistance and transport — all in one professional travel platform.</p>
+<button class="btn orange" onclick="document.getElementById('booking').scrollIntoView()">Start Booking</button>
+</div>
+</section>
+
+<section id="booking" class="wrap booking">
+<div class="tabs">
+<button class="tab active" onclick="tab('flight',this)">✈ Flights</button>
+<button class="tab" onclick="tab('hotel',this)">🏨 Hotels</button>
+<button class="tab" onclick="tab('tour',this)">🌍 Tours</button>
+</div>
+<form id="flight" class="form active" onsubmit="searchDemo(event,'Flight')">
+<div class="field"><label>From</label><input placeholder="DAC — Dhaka" required></div>
+<div class="field"><label>To</label><input placeholder="DXB — Dubai" required></div>
+<div class="field"><label>Departure</label><input type="date" required></div>
+<div class="field"><label>Return</label><input type="date"></div>
+<div class="field"><label>Passengers</label><select><option>1 Adult</option><option>2 Adults</option><option>3 Adults</option></select></div>
+<button class="btn orange">Search</button>
+</form>
+<form id="hotel" class="form" onsubmit="searchDemo(event,'Hotel')">
+<div class="field"><label>Destination</label><input placeholder="Cox's Bazar" required></div>
+<div class="field"><label>Check-in</label><input type="date" required></div>
+<div class="field"><label>Check-out</label><input type="date" required></div>
+<div class="field"><label>Guests</label><select><option>2 Guests</option><option>1 Guest</option><option>3 Guests</option></select></div>
+<button class="btn orange">Search</button>
+</form>
+<form id="tour" class="form" onsubmit="searchDemo(event,'Tour')">
+<div class="field"><label>Destination</label><input placeholder="Thailand / Maldives" required></div>
+<div class="field"><label>Travel date</label><input type="date" required></div>
+<div class="field"><label>Travellers</label><select><option>2 Travellers</option><option>1 Traveller</option><option>4 Travellers</option></select></div>
+<div class="field"><label>Type</label><select><option>Family</option><option>Honeymoon</option><option>Adventure</option></select></div>
+<button class="btn orange">Find</button>
+</form>
+</section>
+
+<section id="flights" class="section"><div class="wrap"><div class="head"><div><small style="color:#ff7b22;font-weight:900">FLIGHTS</small><h2>Fly anywhere.</h2></div><p>International and domestic flight booking interface — demo mode.</p></div><div class="grid">
+<div class="card"><div class="card-body"><span class="tag">International</span><h3>Dhaka → Dubai</h3><p>Return · Economy · 1 Adult</p><div class="price">From ৳38,500</div><button class="btn orange" onclick="book('International Flight')">Book</button></div></div>
+<div class="card"><div class="card-body"><span class="tag">International</span><h3>Dhaka → Bangkok</h3><p>Return · Economy · 1 Adult</p><div class="price">From ৳32,000</div><button class="btn orange" onclick="book('Bangkok Flight')">Book</button></div></div>
+<div class="card"><div class="card-body"><span class="tag">Domestic</span><h3>Dhaka → Cox's Bazar</h3><p>Return · Economy · 1 Adult</p><div class="price">From ৳6,500</div><button class="btn orange" onclick="book('Domestic Flight')">Book</button></div></div>
+</div></div></section>
+
+<section id="hotels" class="section alt"><div class="wrap"><div class="head"><div><small style="color:#ff7b22;font-weight:900">HOTELS</small><h2>Stay somewhere special.</h2></div><p>Hotel booking demo with featured properties.</p></div><div class="grid">
+<div class="card"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"><div class="card-body"><span class="tag">Cox's Bazar</span><h3>Ocean Paradise Resort</h3><p>★★★★★ · Beach resort</p><div class="price">৳5,500/night</div><button class="btn orange" onclick="book('Ocean Paradise Hotel')">Book hotel</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80"><div class="card-body"><span class="tag">Dhaka</span><h3>Grand City Hotel</h3><p>★★★★★ · Business hotel</p><div class="price">৳4,500/night</div><button class="btn orange" onclick="book('Grand City Hotel')">Book hotel</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80"><div class="card-body"><span class="tag">Bandarban</span><h3>Hill View Resort</h3><p>★★★★☆ · Nature resort</p><div class="price">৳3,800/night</div><button class="btn orange" onclick="book('Hill View Resort')">Book hotel</button></div></div>
+</div></div></section>
+
+<section id="tours" class="section"><div class="wrap"><div class="head"><div><small style="color:#ff7b22;font-weight:900">TOUR PACKAGES</small><h2>Every kind of trip.</h2></div><p>Domestic and international packages for family, honeymoon, adventure and corporate travel.</p></div><div class="grid">
+<div class="card"><img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80"><div class="card-body"><span class="tag">Bangladesh</span><h3>Cox's Bazar Escape</h3><p>3 Days · 2 Nights · Hotel + transport</p><div class="price">From ৳12,500</div><button class="btn orange" onclick="book('Coxs Bazar Tour')">View package</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=900&q=80"><div class="card-body"><span class="tag">Bangladesh</span><h3>Bandarban Adventure</h3><p>3 Days · 2 Nights · Hills + guide</p><div class="price">From ৳10,500</div><button class="btn orange" onclick="book('Bandarban Tour')">View package</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=900&q=80"><div class="card-body"><span class="tag">International</span><h3>Maldives Escape</h3><p>4 Days · 3 Nights · Resort + transfer</p><div class="price">From ৳68,000</div><button class="btn orange" onclick="book('Maldives Tour')">View package</button></div></div>
+</div></div></section>
+
+<section id="services" class="section alt"><div class="wrap"><div class="head"><div><small style="color:#ff7b22;font-weight:900">SERVICES</small><h2>Everything you need.</h2></div></div><div class="services">
+<div class="service"><div>✈️</div><b>Air Ticketing</b><p>Domestic & international.</p></div><div class="service"><div>🏨</div><b>Hotel Booking</b><p>Hotels and resorts.</p></div><div class="service"><div>🛂</div><b>Visa Assistance</b><p>Documentation support.</p></div><div class="service"><div>🚐</div><b>Airport Transfer</b><p>Private transport.</p></div><div class="service"><div>💼</div><b>Corporate Travel</b><p>Business travel management.</p></div><div class="service"><div>💍</div><b>Honeymoon</b><p>Romantic packages.</p></div>
+</div></div></section>
+
+<section id="userDash" class="section dash"><div class="wrap"><div class="dash-top"><div><small style="color:#ff7b22;font-weight:900">MY ACCOUNT</small><h2 id="hello">Welcome</h2></div><button class="btn orange" onclick="logout()">Logout</button></div><div class="stats"><div class="stat"><small>Upcoming trips</small><b>2</b></div><div class="stat"><small>Total bookings</small><b>8</b></div><div class="stat"><small>Reward points</small><b>1,240</b></div></div><div class="panel"><h3>My bookings</h3><div class="row"><div><b>#VG-10482 · Dhaka → Dubai</b><br><small>18 Sep 2026</small></div><span class="status">Confirmed</span></div><div class="row"><div><b>#VG-10480 · Maldives Escape</b><br><small>03 Oct 2026</small></div><span class="status" style="background:#fff4df;color:#a66a00">Pending</span></div></div></div></section>
+
+<section id="admin" class="section admin"><div class="wrap"><div class="head"><div><small style="color:#ff7b22;font-weight:900">ADMIN PANEL</small><h2>Travel operations</h2></div><button class="btn orange" onclick="closeAdmin()">Back to website</button></div><div class="admin-grid"><div class="admin-card">Bookings<b>48</b></div><div class="admin-card">Revenue<b>৳8.42L</b></div><div class="admin-card">Customers<b>2,846</b></div><div class="admin-card">Pending<b>17</b></div></div><div class="panel"><h3>Management</h3><p>✈ Flight bookings · 🏨 Hotels · 🌍 Tour packages · 👥 Customers · 💳 Payments</p><div class="notice">Demo only: live airline tickets, hotel inventory and payments require a backend/API integration.</div></div></div></section>
+
+<footer onclick="if(++window.fc>=5)openAdmin()">© 2026 Voyago Travel — Professional Travel Agency Demo · Admin demo: click this footer 5 times</footer><script>window.fc=0</script>
+
+<div id="modal" class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><div id="modalContent"></div></div></div>
+
+<script>
+let users=JSON.parse(localStorage.getItem("voyagoDemoUsers")||"[]"),current=JSON.parse(localStorage.getItem("voyagoDemoCurrent")||"null");
+function tab(id,b){document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".form").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(id).classList.add("active")}
+function openModal(type){
+let c=document.getElementById("modalContent");
+if(type==="login")c.innerHTML='<h2>Login to Voyago</h2><p>Demo account system</p><input id="lemail" type="email" placeholder="Email"><input id="lpass" type="password" placeholder="Password"><button class="btn orange" style="width:100%;margin-top:8px" onclick="login()">Login</button><p style="text-align:center;margin-top:12px">New user? <a href="#" onclick="openModal(\\'signup\\')" style="color:#0b7ea4">Create account</a></p>';
+else c.innerHTML='<h2>Create your account</h2><p>Sign up for faster booking.</p><input id="sname" placeholder="Full name"><input id="semail" type="email" placeholder="Email"><input id="sphone" placeholder="Phone number"><input id="spass" type="password" placeholder="Password"><button class="btn orange" style="width:100%;margin-top:8px" onclick="signup()">Create account</button>';
+document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function signup(){let u={name:sname.value,email:semail.value,phone:sphone.value,password:spass.value};if(!u.name||!u.email||!u.password)return alert("Please complete all fields.");users.push(u);localStorage.setItem("voyagoDemoUsers",JSON.stringify(users));current=u;localStorage.setItem("voyagoDemoCurrent",JSON.stringify(u));closeModal();showDashboard()}
+function login(){let u=users.find(x=>x.email===lemail.value&&x.password===lpass.value);if(!u)return alert("Demo account not found. Please Sign Up first.");current=u;localStorage.setItem("voyagoDemoCurrent",JSON.stringify(u));closeModal();showDashboard()}
+function showDashboard(){document.querySelectorAll("main section").forEach(x=>{if(x.id!=="userDash")x.style.display="none"});document.getElementById("userDash").style.display="block";document.getElementById("hello").textContent="Welcome, "+current.name;window.scrollTo(0,0)}
+function logout(){current=null;localStorage.removeItem("voyagoDemoCurrent");location.reload()}
+function book(name){if(!current){openModal("login");return}alert("Demo booking: "+name+"\\n\\nBooking request created for "+current.name+".")}
+function searchDemo(e,type){e.preventDefault();alert(type+" search demo submitted. Live API can be connected later.")}
+function openAdmin(){document.querySelectorAll("main section").forEach(x=>x.style.display="none");document.getElementById("admin").style.display="block";window.scrollTo(0,0)}
+function closeAdmin(){location.reload()}
+function home(){location.reload()}
+</script>
+</body>
+</html>
