@@ -2,246 +2,113 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Connectly — Social Network Demo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Connectly — Social Network</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--blue:#1877f2;--bg:#f0f2f5;--card:#fff;--text:#17202a;--muted:#65676b;--border:#dddfe2}
-body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-button,input,textarea{font:inherit}
-button{cursor:pointer;border:0}
-.nav{height:62px;background:#fff;display:flex;align-items:center;gap:16px;padding:0 22px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
-.logo{font-size:25px;font-weight:800;color:var(--blue);min-width:145px}
-.search{background:#f0f2f5;border-radius:22px;padding:10px 16px;width:270px;border:0;outline:none}
-.navlinks{display:flex;gap:8px;margin-left:auto}
-.navlinks button{background:#f0f2f5;border-radius:50%;width:42px;height:42px;font-size:19px}
-.navlinks button:hover{background:#e4e6eb}
-.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#1877f2,#7b2ff7);color:#fff;display:grid;place-items:center;font-weight:bold}
-.layout{max-width:1250px;margin:auto;display:grid;grid-template-columns:240px 1fr 290px;gap:20px;padding:20px}
-.sidebar,.rightbar{position:sticky;top:82px;height:max-content}
-.menu{background:#fff;border-radius:12px;padding:10px}
-.menu-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:9px;font-weight:600}
-.menu-item:hover{background:#f0f2f5}
-.card{background:#fff;border-radius:12px;border:1px solid var(--border);margin-bottom:16px;overflow:hidden}
-.stories{display:flex;gap:10px;padding:14px;overflow:auto}
-.story{min-width:115px;height:175px;border-radius:12px;position:relative;overflow:hidden;color:#fff;background:linear-gradient(160deg,#1877f2,#8e44ad);display:flex;align-items:flex-end;padding:12px;font-weight:bold}
-.story:nth-child(2){background:linear-gradient(160deg,#ff9966,#ff5e62)}
-.story:nth-child(3){background:linear-gradient(160deg,#11998e,#38ef7d)}
-.story:nth-child(4){background:linear-gradient(160deg,#4568dc,#b06ab3)}
-.story:nth-child(5){background:linear-gradient(160deg,#fc4a1a,#f7b733)}
-.story .storyav{position:absolute;top:10px;left:10px;border:3px solid #fff}
-.composer{padding:14px}
-.compose-row{display:flex;gap:10px;align-items:center}
-.compose-input{background:#f0f2f5;border:0;border-radius:22px;padding:12px 16px;flex:1;outline:none}
-.actions{display:flex;border-top:1px solid var(--border);margin-top:14px;padding-top:10px}
-.actions button{flex:1;background:#fff;padding:10px;border-radius:8px;color:var(--muted);font-weight:600}
-.actions button:hover{background:#f0f2f5}
-.post-head{display:flex;align-items:center;gap:10px;padding:14px}
-.post-head small{color:var(--muted)}
-.post-body{padding:0 14px 14px;line-height:1.5}
-.post-img{height:270px;background:linear-gradient(135deg,#667eea,#764ba2);display:grid;place-items:center;color:white;font-size:55px}
-.post-img.sun{background:linear-gradient(135deg,#f7971e,#ffd200)}
-.post-stats{display:flex;justify-content:space-between;padding:10px 14px;color:var(--muted);font-size:14px}
-.post-buttons{display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:0 14px}
-.post-buttons button{flex:1;padding:10px;background:#fff;color:var(--muted);font-weight:bold}
-.post-buttons button.liked{color:var(--blue)}
-.comment-box{display:none;padding:10px 14px}
-.comment-box input{width:100%;border:0;background:#f0f2f5;padding:10px 14px;border-radius:20px;outline:none}
-.comment-list{padding:0 14px 12px}
-.comment{background:#f0f2f5;border-radius:12px;padding:8px 12px;margin-top:7px;font-size:14px}
-.right-title{font-weight:bold;margin-bottom:10px}
-.contact{display:flex;gap:10px;align-items:center;padding:9px}
-.contact:hover{background:#e4e6eb;border-radius:8px}
-.online{width:10px;height:10px;background:#31a24c;border-radius:50%;margin-left:auto}
-.profile{padding:18px;text-align:center}
-.profile .bigavatar{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#1877f2,#7b2ff7);color:#fff;display:grid;place-items:center;font-size:30px;font-weight:bold;margin:0 auto 10px}
-.btn{background:var(--blue);color:white;padding:10px 18px;border-radius:8px;font-weight:bold}
-.btn.secondary{background:#e4e6eb;color:#17202a}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;align-items:center;justify-content:center;padding:20px}
-.modal.show{display:flex}
-.modal-box{background:#fff;width:100%;max-width:520px;border-radius:14px;padding:18px}
-.modal-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:15px}
-.close{background:#e4e6eb;border-radius:50%;width:34px;height:34px}
-.modal textarea{width:100%;height:130px;resize:none;border:1px solid var(--border);border-radius:10px;padding:12px;outline:none}
-.fullbtn{width:100%;margin-top:12px}
-.toast{position:fixed;right:20px;bottom:20px;background:#17202a;color:#fff;padding:13px 18px;border-radius:9px;display:none;z-index:100}
-.toast.show{display:block}
-@media(max-width:950px){.layout{grid-template-columns:1fr}.sidebar,.rightbar{display:none}.search{width:180px}.nav{padding:0 10px}.logo{min-width:auto}.navlinks{gap:3px}}
-@media(max-width:600px){.search{display:none}.navlinks button:nth-child(2),.navlinks button:nth-child(3){display:none}.layout{padding:10px}.story{min-width:95px;height:145px}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f0f2f5;color:#17202a}
+button,input,textarea{font:inherit}button{cursor:pointer;border:0}.top{height:62px;background:#fff;border-bottom:1px solid #ddd;display:flex;align-items:center;padding:0 18px;gap:12px;position:sticky;top:0;z-index:20}.brand{font-size:25px;font-weight:800;color:#1877f2}.search{width:260px;background:#f0f2f5;border:0;border-radius:22px;padding:11px 15px;outline:0}.topnav{margin-left:auto;display:flex;gap:7px;align-items:center}.icon{width:42px;height:42px;border-radius:50%;background:#f0f2f5;font-size:18px}.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#1877f2,#7b2ff7);color:#fff;font-weight:bold}.wrap{max-width:1280px;margin:auto;display:grid;grid-template-columns:235px minmax(0,650px) 280px;gap:18px;padding:18px}.left,.right{position:sticky;top:80px;height:max-content}.panel,.card{background:#fff;border-radius:12px;border:1px solid #ddd;margin-bottom:15px}.menu{padding:8px}.mi{padding:12px;border-radius:9px;font-weight:600;display:flex;gap:11px;align-items:center}.mi:hover{background:#f0f2f5}.card{overflow:hidden}.stories{display:flex;gap:10px;padding:12px;overflow:auto}.story{min-width:112px;height:170px;border-radius:12px;color:#fff;padding:10px;display:flex;align-items:flex-end;font-weight:bold;background:linear-gradient(150deg,#1877f2,#833ab4)}.story:nth-child(2){background:linear-gradient(150deg,#ff512f,#dd2476)}.story:nth-child(3){background:linear-gradient(150deg,#11998e,#38ef7d)}.story:nth-child(4){background:linear-gradient(150deg,#4568dc,#b06ab3)}.story:nth-child(5){background:linear-gradient(150deg,#f7971e,#ffd200)}.story .av{position:absolute;margin-top:-120px;width:34px;height:34px;border:2px solid white}.composer{padding:14px}.row{display:flex;gap:10px;align-items:center}.fakeinput{flex:1;background:#f0f2f5;padding:12px 17px;border-radius:22px;color:#65676b;cursor:pointer}.quick{display:flex;border-top:1px solid #ddd;margin-top:13px;padding-top:9px}.quick button{background:#fff;flex:1;padding:10px;color:#65676b;font-weight:bold;border-radius:8px}.quick button:hover{background:#f0f2f5}.posthead{display:flex;gap:10px;padding:14px}.small{font-size:13px;color:#65676b}.body{padding:0 14px 14px;line-height:1.5;white-space:pre-wrap}.visual{height:260px;display:grid;place-items:center;font-size:58px;color:white;background:linear-gradient(135deg,#667eea,#764ba2)}.stats{display:flex;justify-content:space-between;padding:9px 14px;color:#65676b;font-size:14px}.postactions{display:flex;border-top:1px solid #ddd;border-bottom:1px solid #ddd;margin:0 14px}.postactions button{background:#fff;color:#65676b;font-weight:bold;flex:1;padding:10px}.postactions .active{color:#1877f2}.comments{display:none;padding:10px 14px}.comments input{width:100%;border:0;background:#f0f2f5;border-radius:20px;padding:10px 14px;outline:0}.commentlist{padding:0 14px 12px}.bubble{background:#f0f2f5;border-radius:12px;padding:8px 11px;margin-top:7px;font-size:14px}.side-title{font-weight:bold;padding:14px 14px 5px}.contact{display:flex;gap:9px;align-items:center;padding:9px 12px}.dot{width:9px;height:9px;background:#31a24c;border-radius:50%;margin-left:auto}.friendbtn{padding:7px 12px;border-radius:7px;background:#1877f2;color:#fff;font-weight:bold}.gray{background:#e4e6eb;color:#17202a}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:100;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.box{background:#fff;width:min(540px,100%);border-radius:14px;padding:18px;max-height:90vh;overflow:auto}.mh{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding-bottom:12px;margin-bottom:14px}.close{width:34px;height:34px;border-radius:50%;background:#e4e6eb}.box textarea{width:100%;height:130px;resize:none;border:1px solid #ddd;border-radius:10px;padding:12px;outline:0}.primary{width:100%;margin-top:12px;background:#1877f2;color:white;padding:11px;border-radius:8px;font-weight:bold}.toast{position:fixed;right:18px;bottom:18px;background:#17202a;color:#fff;padding:12px 17px;border-radius:9px;display:none;z-index:150}.toast.show{display:block}.profile{text-align:center;padding:20px}.big{width:95px;height:95px;margin:auto;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#1877f2,#7b2ff7);color:#fff;font-size:32px;font-weight:bold}.tabs{display:flex;border-top:1px solid #ddd;margin-top:15px}.tabs button{flex:1;background:#fff;padding:11px;font-weight:bold}.chatrow{padding:12px;background:#f0f2f5;border-radius:9px;margin:7px 0}.form input{width:100%;padding:11px;margin:7px 0;border:1px solid #ddd;border-radius:8px;outline:0}@media(max-width:1000px){.wrap{grid-template-columns:1fr 650px;justify-content:center}.right{display:none}}@media(max-width:760px){.wrap{display:block;padding:8px}.left{display:none}.search{display:none}.brand{font-size:22px}.visual{height:220px}}
 </style>
 </head>
 <body>
-
-<header class="nav">
-  <div class="logo">Connectly</div>
-  <input class="search" id="search" placeholder="Search Connectly..." oninput="searchPosts()">
-  <div class="navlinks">
-    <button onclick="toast('Home')">⌂</button>
-    <button onclick="openModal('notifications')">🔔</button>
-    <button onclick="openModal('messages')">💬</button>
-    <div class="avatar">MR</div>
-  </div>
+<header class="top">
+  <div class="brand">Connectly</div>
+  <input class="search" id="search" placeholder="Search Connectly..." oninput="searchFeed()">
+  <nav class="topnav">
+    <button class="icon" onclick="goHome()">⌂</button>
+    <button class="icon" onclick="notifications()">🔔</button>
+    <button class="icon" onclick="messages()">💬</button>
+    <button class="icon" onclick="profile()">👤</button>
+    <div class="av">MR</div>
+  </nav>
 </header>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="menu">
-      <div class="menu-item" onclick="openProfile()">👤 <span>My Profile</span></div>
-      <div class="menu-item" onclick="toast('Friends page opened')">👥 <span>Friends</span></div>
-      <div class="menu-item" onclick="toast('Saved posts opened')">🔖 <span>Saved</span></div>
-      <div class="menu-item" onclick="toast('Groups opened')">👨‍👩‍👧 <span>Groups</span></div>
-      <div class="menu-item" onclick="toast('Marketplace opened')">🛒 <span>Marketplace</span></div>
-      <div class="menu-item" onclick="toast('Settings opened')">⚙️ <span>Settings</span></div>
-    </div>
-  </aside>
+<div class="wrap">
+<aside class="left">
+ <div class="panel menu">
+  <div class="mi" onclick="profile()">👤 My Profile</div>
+  <div class="mi" onclick="toast('Friends section opened')">👥 Friends</div>
+  <div class="mi" onclick="toast('Groups section opened')">👨‍👩‍👧 Groups</div>
+  <div class="mi" onclick="toast('Saved section opened')">🔖 Saved</div>
+  <div class="mi" onclick="toast('Marketplace opened')">🛒 Marketplace</div>
+  <div class="mi" onclick="settings()">⚙️ Settings</div>
+  <div class="mi" onclick="logout()">🚪 Log out</div>
+ </div>
+</aside>
 
-  <main>
-    <div class="card stories">
-      <div class="story"><div class="avatar storyav">MR</div>Your Story</div>
-      <div class="story"><div class="avatar storyav">SA</div>Sarah</div>
-      <div class="story"><div class="avatar storyav">RK</div>Rocky</div>
-      <div class="story"><div class="avatar storyav">JD</div>Jannat</div>
-      <div class="story"><div class="avatar storyav">AB</div>Abir</div>
-    </div>
+<main id="main">
+ <div class="card stories">
+  <div class="story"><div class="av">MR</div>Your Story</div>
+  <div class="story"><div class="av">SA</div>Sarah</div>
+  <div class="story"><div class="av">RK</div>Rocky</div>
+  <div class="story"><div class="av">JA</div>Jannat</div>
+  <div class="story"><div class="av">AB</div>Abir</div>
+ </div>
 
-    <div class="card composer">
-      <div class="compose-row">
-        <div class="avatar">MR</div>
-        <input class="compose-input" placeholder="What's on your mind?" onclick="openModal('post')">
-      </div>
-      <div class="actions">
-        <button onclick="openModal('post')">📹 Live Video</button>
-        <button onclick="openModal('post')">🖼️ Photo/Video</button>
-        <button onclick="openModal('post')">😊 Feeling</button>
-      </div>
-    </div>
+ <div class="card composer">
+  <div class="row"><div class="av">MR</div><div class="fakeinput" onclick="createPost()">What's on your mind?</div></div>
+  <div class="quick"><button onclick="createPost()">📹 Live Video</button><button onclick="createPost()">🖼️ Photo/Video</button><button onclick="createPost()">😊 Feeling</button></div>
+ </div>
 
-    <div id="feed">
-      <article class="card post">
-        <div class="post-head">
-          <div class="avatar">SA</div>
-          <div><b>Sarah Ahmed</b><br><small>2 hrs · 🌎</small></div>
-        </div>
-        <div class="post-body">Beautiful day! Hope everyone is doing great. ❤️</div>
-        <div class="post-img">🌄</div>
-        <div class="post-stats"><span class="likes">👍 128</span><span>24 comments · 8 shares</span></div>
-        <div class="post-buttons">
-          <button onclick="likePost(this)">👍 Like</button>
-          <button onclick="toggleComments(this)">💬 Comment</button>
-          <button onclick="sharePost()">↗ Share</button>
-        </div>
-        <div class="comment-box"><input placeholder="Write a comment..." onkeydown="addComment(event,this)"></div>
-        <div class="comment-list"></div>
-      </article>
+ <div id="feed">
+  <article class="card post">
+   <div class="posthead"><div class="av">SA</div><div><b>Sarah Ahmed</b><br><span class="small">2 hrs · 🌎</span></div></div>
+   <div class="body">Beautiful day! Hope everyone is doing great. ❤️</div><div class="visual">🌄</div>
+   <div class="stats"><span class="likes">👍 128</span><span>24 comments · 8 shares</span></div>
+   <div class="postactions"><button onclick="like(this)">👍 Like</button><button onclick="commentBox(this)">💬 Comment</button><button onclick="share()">↗ Share</button></div>
+   <div class="comments"><input placeholder="Write a comment..." onkeydown="addComment(event,this)"></div><div class="commentlist"></div>
+  </article>
+  <article class="card post">
+   <div class="posthead"><div class="av">RK</div><div><b>Rocky Khan</b><br><span class="small">5 hrs · 📍 Dhaka</span></div></div>
+   <div class="body">আজকের দিনটা অনেক সুন্দর! 😎</div><div class="visual" style="background:linear-gradient(135deg,#f7971e,#ffd200)">☀️</div>
+   <div class="stats"><span class="likes">👍 76</span><span>12 comments · 3 shares</span></div>
+   <div class="postactions"><button onclick="like(this)">👍 Like</button><button onclick="commentBox(this)">💬 Comment</button><button onclick="share()">↗ Share</button></div>
+   <div class="comments"><input placeholder="Write a comment..." onkeydown="addComment(event,this)"></div><div class="commentlist"></div>
+  </article>
+ </div>
+</main>
 
-      <article class="card post">
-        <div class="post-head">
-          <div class="avatar">RK</div>
-          <div><b>Rocky Khan</b><br><small>5 hrs · 📍 Dhaka</small></div>
-        </div>
-        <div class="post-body">আজকের দিনটা অনেক সুন্দর! 😎</div>
-        <div class="post-img sun">☀️</div>
-        <div class="post-stats"><span class="likes">👍 76</span><span>12 comments · 3 shares</span></div>
-        <div class="post-buttons">
-          <button onclick="likePost(this)">👍 Like</button>
-          <button onclick="toggleComments(this)">💬 Comment</button>
-          <button onclick="sharePost()">↗ Share</button>
-        </div>
-        <div class="comment-box"><input placeholder="Write a comment..." onkeydown="addComment(event,this)"></div>
-        <div class="comment-list"></div>
-      </article>
-    </div>
-  </main>
-
-  <aside class="rightbar">
-    <div class="card" style="padding:15px">
-      <div class="right-title">Friend Requests</div>
-      <div class="contact"><div class="avatar">JA</div><div><b>Jannat Akter</b><br><small>5 mutual friends</small></div></div>
-      <div style="display:flex;gap:7px;margin:8px"><button class="btn" onclick="acceptFriend(this)">Confirm</button><button class="btn secondary" onclick="this.closest('.contact').remove()">Delete</button></div>
-    </div>
-    <div class="card" style="padding:15px">
-      <div class="right-title">Contacts</div>
-      <div class="contact"><div class="avatar">SA</div>Sarah Ahmed <span class="online"></span></div>
-      <div class="contact"><div class="avatar">AB</div>Abir Hasan <span class="online"></span></div>
-      <div class="contact"><div class="avatar">JD</div>Jannat Akter <span class="online"></span></div>
-      <div class="contact"><div class="avatar">RK</div>Rocky Khan <span class="online"></span></div>
-    </div>
-  </aside>
+<aside class="right">
+ <div class="panel">
+  <div class="side-title">Friend Requests</div>
+  <div class="contact" id="req"><div class="av">JA</div><div><b>Jannat Akter</b><br><span class="small">5 mutual friends</span></div></div>
+  <div style="padding:0 12px 12px;display:flex;gap:7px"><button class="friendbtn" onclick="confirmFriend()">Confirm</button><button class="friendbtn gray" onclick="document.getElementById('req').remove()">Delete</button></div>
+ </div>
+ <div class="panel">
+  <div class="side-title">Contacts</div>
+  <div class="contact"><div class="av">SA</div>Sarah Ahmed <span class="dot"></span></div>
+  <div class="contact"><div class="av">AB</div>Abir Hasan <span class="dot"></span></div>
+  <div class="contact"><div class="av">JA</div>Jannat Akter <span class="dot"></span></div>
+  <div class="contact"><div class="av">RK</div>Rocky Khan <span class="dot"></span></div>
+ </div>
+</aside>
 </div>
 
-<div class="modal" id="modal">
-  <div class="modal-box" id="modalBox"></div>
-</div>
-<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="box" id="box"></div></div><div class="toast" id="toast"></div>
 
 <script>
-const modal=document.getElementById('modal'), modalBox=document.getElementById('modalBox');
-
-function openModal(type){
-  modal.classList.add('show');
-  if(type==='post'){
-    modalBox.innerHTML=`<div class="modal-head"><h2>Create Post</h2><button class="close" onclick="closeModal()">✕</button></div>
-    <div class="compose-row"><div class="avatar">MR</div><b>MR Rocky</b></div>
-    <textarea id="newPostText" placeholder="What's on your mind?"></textarea>
-    <button class="btn fullbtn" onclick="createPost()">Post</button>`;
-  }else if(type==='notifications'){
-    modalBox.innerHTML=`<div class="modal-head"><h2>Notifications</h2><button class="close" onclick="closeModal()">✕</button></div>
-    <p style="padding:12px">👍 Sarah Ahmed liked your post.</p><p style="padding:12px">💬 Abir commented on your post.</p><p style="padding:12px">👥 Jannat sent you a friend request.</p>`;
-  }else{
-    modalBox.innerHTML=`<div class="modal-head"><h2>Messenger</h2><button class="close" onclick="closeModal()">✕</button></div>
-    <div class="contact"><div class="avatar">SA</div><b>Sarah Ahmed</b><span class="online"></span></div>
-    <div class="contact"><div class="avatar">AB</div><b>Abir Hasan</b><span class="online"></span></div>
-    <button class="btn fullbtn" onclick="toast('Chat demo opened');closeModal()">Open Chat</button>`;
-  }
-}
-function closeModal(){modal.classList.remove('show')}
-modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-
-function likePost(btn){
-  btn.classList.toggle('liked');
-  const stats=btn.closest('.post').querySelector('.likes');
-  let n=parseInt(stats.textContent.replace(/\D/g,''))||0;
-  n += btn.classList.contains('liked') ? 1 : -1;
-  stats.textContent='👍 '+n;
-}
-function toggleComments(btn){
-  const box=btn.closest('.post').querySelector('.comment-box');
-  box.style.display=box.style.display==='block'?'none':'block';
-  if(box.style.display==='block')box.querySelector('input').focus();
-}
-function addComment(e,input){
-  if(e.key==='Enter' && input.value.trim()){
-    const list=input.closest('.post').querySelector('.comment-list');
-    const div=document.createElement('div');div.className='comment';
-    div.innerHTML='<b>MR Rocky</b> '+escapeHtml(input.value.trim());
-    list.appendChild(div);input.value='';toast('Comment added');
-  }
-}
-function sharePost(){toast('Post shared successfully')}
-function createPost(){
-  const text=document.getElementById('newPostText').value.trim();
-  if(!text){toast('Write something first');return}
-  const article=document.createElement('article');
-  article.className='card post';
-  article.innerHTML=`<div class="post-head"><div class="avatar">MR</div><div><b>MR Rocky</b><br><small>Just now · 🌎</small></div></div>
-  <div class="post-body">${escapeHtml(text)}</div>
-  <div class="post-stats"><span class="likes">👍 0</span><span>0 comments · 0 shares</span></div>
-  <div class="post-buttons"><button onclick="likePost(this)">👍 Like</button><button onclick="toggleComments(this)">💬 Comment</button><button onclick="sharePost()">↗ Share</button></div>
-  <div class="comment-box"><input placeholder="Write a comment..." onkeydown="addComment(event,this)"></div><div class="comment-list"></div>`;
-  document.getElementById('feed').prepend(article);closeModal();toast('Post published');
-}
-function openProfile(){
-  modal.classList.add('show');
-  modalBox.innerHTML=`<div class="modal-head"><h2>My Profile</h2><button class="close" onclick="closeModal()">✕</button></div>
-  <div class="profile"><div class="bigavatar">MR</div><h2>MR Rocky</h2><p style="color:#65676b;margin:6px 0 15px">1.2K Friends · 48 Posts</p><button class="btn" onclick="toast('Profile editing is a demo');">Edit Profile</button></div>`;
-}
-function acceptFriend(btn){btn.textContent='Friends ✓';btn.disabled=true;toast('Friend request accepted')}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
-function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function searchPosts(){
-  const q=document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('.post').forEach(p=>p.style.display=p.innerText.toLowerCase().includes(q)?'block':'none');
-}
+const modal=document.getElementById('modal'),box=document.getElementById('box');
+function openBox(html){box.innerHTML=html;modal.classList.add('show')}
+function closeBox(){modal.classList.remove('show')}
+modal.onclick=e=>{if(e.target===modal)closeBox()}
+function createPost(){openBox(`<div class="mh"><h2>Create Post</h2><button class="close" onclick="closeBox()">✕</button></div><div class="row"><div class="av">MR</div><b>MR Rocky</b></div><textarea id="posttext" placeholder="What's on your mind?"></textarea><div class="row" style="margin-top:8px"><button class="friendbtn gray" onclick="toast('Photo picker demo')">🖼️ Photo</button><button class="friendbtn gray" onclick="toast('Feeling picker demo')">😊 Feeling</button><button class="friendbtn gray" onclick="toast('Privacy: Public')">🌎 Public</button></div><button class="primary" onclick="publish()">Post</button>`)}
+function publish(){let t=document.getElementById('posttext').value.trim();if(!t)return toast('Write something first');let p=document.createElement('article');p.className='card post';p.innerHTML=`<div class="posthead"><div class="av">MR</div><div><b>MR Rocky</b><br><span class="small">Just now · 🌎</span></div></div><div class="body">${esc(t)}</div><div class="stats"><span class="likes">👍 0</span><span>0 comments · 0 shares</span></div><div class="postactions"><button onclick="like(this)">👍 Like</button><button onclick="commentBox(this)">💬 Comment</button><button onclick="share()">↗ Share</button></div><div class="comments"><input placeholder="Write a comment..." onkeydown="addComment(event,this)"></div><div class="commentlist"></div>`;document.getElementById('feed').prepend(p);closeBox();toast('Post published')}
+function like(b){b.classList.toggle('active');let s=b.closest('.post').querySelector('.likes'),n=parseInt(s.textContent.replace(/\D/g,''))||0;s.textContent='👍 '+(n+(b.classList.contains('active')?1:-1))}
+function commentBox(b){let c=b.closest('.post').querySelector('.comments');c.style.display=c.style.display==='block'?'none':'block';if(c.style.display==='block')c.querySelector('input').focus()}
+function addComment(e,i){if(e.key!=='Enter'||!i.value.trim())return;let d=document.createElement('div');d.className='bubble';d.innerHTML='<b>MR Rocky</b> '+esc(i.value.trim());i.closest('.post').querySelector('.commentlist').appendChild(d);i.value='';toast('Comment added')}
+function share(){toast('Post shared successfully')}
+function profile(){openBox(`<div class="mh"><h2>My Profile</h2><button class="close" onclick="closeBox()">✕</button></div><div class="profile"><div class="big">MR</div><h2>MR Rocky</h2><p class="small">1.2K Friends · 48 Posts</p><button class="friendbtn" onclick="editProfile()">Edit Profile</button><div class="tabs"><button>Posts</button><button>Friends</button><button>Photos</button></div></div>`)}
+function editProfile(){openBox(`<div class="mh"><h2>Edit Profile</h2><button class="close" onclick="closeBox()">✕</button></div><div class="form"><label>Name</label><input value="MR Rocky"><label>Bio</label><input value="Welcome to my Connectly profile"><label>Location</label><input value="Bangladesh"><button class="primary" onclick="toast('Profile updated');closeBox()">Save Changes</button></div>`)}
+function notifications(){openBox(`<div class="mh"><h2>Notifications</h2><button class="close" onclick="closeBox()">✕</button></div><div class="chatrow">👍 Sarah Ahmed liked your post.</div><div class="chatrow">💬 Abir commented on your post.</div><div class="chatrow">👥 Jannat sent you a friend request.</div><div class="chatrow">❤️ You have a new reaction.</div>`)}
+function messages(){openBox(`<div class="mh"><h2>Messenger</h2><button class="close" onclick="closeBox()">✕</button></div><div class="chatrow">🟢 Sarah Ahmed — Online</div><div class="chatrow">🟢 Abir Hasan — Online</div><div class="chatrow">🟢 Jannat Akter — Online</div><button class="primary" onclick="chatDemo()">Open Chat</button>`)}
+function chatDemo(){openBox(`<div class="mh"><h2>Sarah Ahmed</h2><button class="close" onclick="closeBox()">✕</button></div><div style="background:#f0f2f5;padding:15px;border-radius:10px"><div class="chatrow">Sarah: Hi! 👋</div><div class="chatrow" style="text-align:right">You: Hello! How are you?</div></div><input id="msg" style="width:100%;padding:11px;border:1px solid #ddd;border-radius:20px;margin-top:10px" placeholder="Type a message..." onkeydown="sendMsg(event,this)">`)}
+function sendMsg(e,i){if(e.key==='Enter'&&i.value.trim()){toast('Message sent');i.value=''}}
+function settings(){openBox(`<div class="mh"><h2>Settings</h2><button class="close" onclick="closeBox()">✕</button></div><div class="mi">🔐 Privacy & Security</div><div class="mi">🔔 Notifications</div><div class="mi">🌙 Appearance</div><div class="mi">🌐 Language</div><button class="primary" onclick="toast('Settings saved');closeBox()">Save</button>`)}
+function confirmFriend(){document.getElementById('req').innerHTML='<div class="av">JA</div><b>Jannat Akter — Friends ✓</b>';toast('Friend request accepted')}
+function searchFeed(){let q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.post').forEach(p=>p.style.display=p.innerText.toLowerCase().includes(q)?'block':'none')}
+function goHome(){window.scrollTo({top:0,behavior:'smooth'});toast('Home')}
+function logout(){toast('Demo logout — backend authentication not connected')}
+function toast(x){let t=document.getElementById('toast');t.textContent=x;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function esc(s){let d=document.createElement('div');d.textContent=s;return d.innerHTML}
 </script>
 </body>
 </html>
