@@ -6,78 +6,144 @@
 <title>Connectly — Social Network</title>
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f0f2f5;color:#17202a}
-button,input,textarea{font:inherit}button{cursor:pointer;border:0}.top{height:62px;background:#fff;border-bottom:1px solid #ddd;display:flex;align-items:center;padding:0 18px;gap:12px;position:sticky;top:0;z-index:20}.brand{font-size:25px;font-weight:800;color:#1877f2}.search{width:260px;background:#f0f2f5;border:0;border-radius:22px;padding:11px 15px;outline:0}.topnav{margin-left:auto;display:flex;gap:7px;align-items:center}.icon{width:42px;height:42px;border-radius:50%;background:#f0f2f5;font-size:18px}.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#1877f2,#7b2ff7);color:#fff;font-weight:bold}.wrap{max-width:1280px;margin:auto;display:grid;grid-template-columns:235px minmax(0,650px) 280px;gap:18px;padding:18px}.left,.right{position:sticky;top:80px;height:max-content}.panel,.card{background:#fff;border-radius:12px;border:1px solid #ddd;margin-bottom:15px}.menu{padding:8px}.mi{padding:12px;border-radius:9px;font-weight:600;display:flex;gap:11px;align-items:center}.mi:hover{background:#f0f2f5}.card{overflow:hidden}.stories{display:flex;gap:10px;padding:12px;overflow:auto}.story{min-width:112px;height:170px;border-radius:12px;color:#fff;padding:10px;display:flex;align-items:flex-end;font-weight:bold;background:linear-gradient(150deg,#1877f2,#833ab4)}.story:nth-child(2){background:linear-gradient(150deg,#ff512f,#dd2476)}.story:nth-child(3){background:linear-gradient(150deg,#11998e,#38ef7d)}.story:nth-child(4){background:linear-gradient(150deg,#4568dc,#b06ab3)}.story:nth-child(5){background:linear-gradient(150deg,#f7971e,#ffd200)}.story .av{position:absolute;margin-top:-120px;width:34px;height:34px;border:2px solid white}.composer{padding:14px}.row{display:flex;gap:10px;align-items:center}.fakeinput{flex:1;background:#f0f2f5;padding:12px 17px;border-radius:22px;color:#65676b;cursor:pointer}.quick{display:flex;border-top:1px solid #ddd;margin-top:13px;padding-top:9px}.quick button{background:#fff;flex:1;padding:10px;color:#65676b;font-weight:bold;border-radius:8px}.quick button:hover{background:#f0f2f5}.posthead{display:flex;gap:10px;padding:14px}.small{font-size:13px;color:#65676b}.body{padding:0 14px 14px;line-height:1.5;white-space:pre-wrap}.visual{height:260px;display:grid;place-items:center;font-size:58px;color:white;background:linear-gradient(135deg,#667eea,#764ba2)}.stats{display:flex;justify-content:space-between;padding:9px 14px;color:#65676b;font-size:14px}.postactions{display:flex;border-top:1px solid #ddd;border-bottom:1px solid #ddd;margin:0 14px}.postactions button{background:#fff;color:#65676b;font-weight:bold;flex:1;padding:10px}.postactions .active{color:#1877f2}.comments{display:none;padding:10px 14px}.comments input{width:100%;border:0;background:#f0f2f5;border-radius:20px;padding:10px 14px;outline:0}.commentlist{padding:0 14px 12px}.bubble{background:#f0f2f5;border-radius:12px;padding:8px 11px;margin-top:7px;font-size:14px}.side-title{font-weight:bold;padding:14px 14px 5px}.contact{display:flex;gap:9px;align-items:center;padding:9px 12px}.dot{width:9px;height:9px;background:#31a24c;border-radius:50%;margin-left:auto}.friendbtn{padding:7px 12px;border-radius:7px;background:#1877f2;color:#fff;font-weight:bold}.gray{background:#e4e6eb;color:#17202a}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:100;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.box{background:#fff;width:min(540px,100%);border-radius:14px;padding:18px;max-height:90vh;overflow:auto}.mh{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding-bottom:12px;margin-bottom:14px}.close{width:34px;height:34px;border-radius:50%;background:#e4e6eb}.box textarea{width:100%;height:130px;resize:none;border:1px solid #ddd;border-radius:10px;padding:12px;outline:0}.primary{width:100%;margin-top:12px;background:#1877f2;color:white;padding:11px;border-radius:8px;font-weight:bold}.toast{position:fixed;right:18px;bottom:18px;background:#17202a;color:#fff;padding:12px 17px;border-radius:9px;display:none;z-index:150}.toast.show{display:block}.profile{text-align:center;padding:20px}.big{width:95px;height:95px;margin:auto;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#1877f2,#7b2ff7);color:#fff;font-size:32px;font-weight:bold}.tabs{display:flex;border-top:1px solid #ddd;margin-top:15px}.tabs button{flex:1;background:#fff;padding:11px;font-weight:bold}.chatrow{padding:12px;background:#f0f2f5;border-radius:9px;margin:7px 0}.form input{width:100%;padding:11px;margin:7px 0;border:1px solid #ddd;border-radius:8px;outline:0}@media(max-width:1000px){.wrap{grid-template-columns:1fr 650px;justify-content:center}.right{display:none}}@media(max-width:760px){.wrap{display:block;padding:8px}.left{display:none}.search{display:none}.brand{font-size:22px}.visual{height:220px}}
+button,input,textarea{font:inherit}button{cursor:pointer;border:0}
+/* Auth View Styles */
+#auth-container{display:flex;justify-content:center;align-items:center;height:100vh;background:#f0f2f5}
+.auth-box{background:#fff;padding:30px;border-radius:8px;width:380px;box-shadow:0 4px 12px rgba(0,0,0,0.15);text-align:center}
+.auth-box h1{color:#1877f2;margin-bottom:20px;font-size:32px;}
+.auth-box input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;outline:0}
+.auth-box button{width:100%;padding:12px;margin:8px 0;border-radius:6px;font-weight:bold}
+.btn-login{background:#1877f2;color:#fff}
+.btn-google{background:#4285f4;color:#fff}
+/* App View Styles */
+#app-container{display:none}
+.top{height:62px;background:#fff;border-bottom:1px solid #ddd;display:flex;align-items:center;padding:0 18px;gap:12px;position:sticky;top:0;z-index:20}
+.brand{font-size:25px;font-weight:800;color:#1877f2}
+.search{width:260px;background:#f0f2f5;border:0;border-radius:22px;padding:11px 15px;outline:0}
+.topnav{margin-left:auto;display:flex;gap:7px;align-items:center}
+.icon{width:42px;height:42px;border-radius:50%;background:#f0f2f5;font-size:18px}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#1877f2,#7b2ff7);color:#fff;font-weight:bold}
+.wrap{max-width:1280px;margin:auto;display:grid;grid-template-columns:235px minmax(0,650px) 280px;gap:18px;padding:18px}
+.left,.right{position:sticky;top:80px;height:max-content}
+.panel,.card{background:#fff;border-radius:12px;border:1px solid #ddd;margin-bottom:15px}
+.menu{padding:8px}
+.mi{padding:12px;border-radius:9px;font-weight:600;display:flex;gap:11px;align-items:center;cursor:pointer}
+.mi:hover{background:#f0f2f5}
+.card{overflow:hidden}
+.stories{display:flex;gap:10px;padding:12px;overflow:auto}
+.story{min-width:112px;height:170px;border-radius:12px;color:#fff;padding:10px;display:flex;align-items:flex-end;font-weight:bold;background:linear-gradient(150deg,#1877f2,#833ab4)}
+.composer{padding:14px}
+.row{display:flex;gap:10px;align-items:center}
+.fakeinput{flex:1;background:#f0f2f5;padding:12px 17px;border-radius:22px;color:#65676b;cursor:pointer}
+.quick{display:flex;border-top:1px solid #ddd;margin-top:13px;padding-top:9px}
+.quick button{background:#fff;flex:1;padding:10px;color:#65676b;font-weight:bold;border-radius:8px}
+.quick button:hover{background:#f0f2f5}
+.posthead{display:flex;gap:10px;padding:14px}
+.small{font-size:13px;color:#65676b}
+.body{padding:0 14px 14px;line-height:1.5;white-space:pre-wrap}
+.stats{display:flex;justify-content:space-between;padding:9px 14px;color:#65676b;font-size:14px}
+.postactions{display:flex;border-top:1px solid #ddd;border-bottom:1px solid #ddd;margin:0 14px}
+.postactions button{background:#fff;color:#65676b;font-weight:bold;flex:1;padding:10px}
+.postactions .active{color:#1877f2}
+.comments{display:none;padding:10px 14px}
+.comments input{width:100%;border:0;background:#f0f2f5;border-radius:20px;padding:10px 14px;outline:0}
+.commentlist{padding:0 14px 12px}
+.bubble{background:#f0f2f5;border-radius:12px;padding:8px 11px;margin-top:7px;font-size:14px}
+.side-title{font-weight:bold;padding:14px 14px 5px}
+.contact{display:flex;gap:9px;align-items:center;padding:9px 12px}
+.dot{width:9px;height:9px;background:#31a24c;border-radius:50%;margin-left:auto}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}
+.box{background:#fff;width:min(540px,100%);border-radius:14px;padding:18px;max-height:90vh;overflow:auto}
+.mh{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding-bottom:12px;margin-bottom:14px}
+.close{width:34px;height:34px;border-radius:50%;background:#e4e6eb}
+.box textarea{width:100%;height:130px;resize:none;border:1px solid #ddd;border-radius:10px;padding:12px;outline:0}
+.primary{width:100%;margin-top:12px;background:#1877f2;color:white;padding:11px;border-radius:8px;font-weight:bold}
+.toast{position:fixed;right:18px;bottom:18px;background:#17202a;color:#fff;padding:12px 17px;border-radius:9px;display:none;z-index:150}
+.toast.show{display:block}
+@media(max-width:1000px){.wrap{grid-template-columns:1fr 650px;justify-content:center}.right{display:none}}
+@media(max-width:760px){.wrap{display:block;padding:8px}.left,.search{display:none}}
 </style>
 </head>
 <body>
-<header class="top">
-  <div class="brand">Connectly</div>
-  <input class="search" id="search" placeholder="Search Connectly..." oninput="searchFeed()">
-  <nav class="topnav">
-    <button class="icon" onclick="goHome()">⌂</button>
-    <button class="icon" onclick="notifications()">🔔</button>
-    <button class="icon" onclick="messages()">💬</button>
-    <button class="icon" onclick="profile()">👤</button>
-    <div class="av">MR</div>
-  </nav>
-</header>
 
-<div class="wrap">
-<aside class="left">
- <div class="panel menu">
-  <div class="mi" onclick="profile()">👤 My Profile</div>
-  <div class="mi" onclick="toast('Friends section opened')">👥 Friends</div>
-  <div class="mi" onclick="toast('Groups section opened')">👨‍👩‍👧 Groups</div>
-  <div class="mi" onclick="toast('Saved section opened')">🔖 Saved</div>
-  <div class="mi" onclick="toast('Marketplace opened')">🛒 Marketplace</div>
-  <div class="mi" onclick="settings()">⚙️ Settings</div>
-  <div class="mi" onclick="logout()">🚪 Log out</div>
- </div>
-</aside>
-
-<main id="main">
- <div class="card stories">
-  <div class="story"><div class="av">MR</div>Your Story</div>
-  <div class="story"><div class="av">SA</div>Sarah</div>
-  <div class="story"><div class="av">RK</div>Rocky</div>
-  <div class="story"><div class="av">JA</div>Jannat</div>
-  <div class="story"><div class="av">AB</div>Abir</div>
- </div>
-
- <div class="card composer">
-  <div class="row"><div class="av">MR</div><div class="fakeinput" onclick="createPost()">What's on your mind?</div></div>
-  <div class="quick"><button onclick="createPost()">📹 Live Video</button><button onclick="createPost()">🖼️ Photo/Video</button><button onclick="createPost()">😊 Feeling</button></div>
- </div>
-
- <div id="feed">
-  <!-- Firebase থেকে ডায়নামিক পোস্টগুলো এখানে লোড হবে -->
- </div>
-</main>
-
-<aside class="right">
- <div class="panel">
-  <div class="side-title">Friend Requests</div>
-  <div class="contact" id="req"><div class="av">JA</div><div><b>Jannat Akter</b><br><span class="small">5 mutual friends</span></div></div>
-  <div style="padding:0 12px 12px;display:flex;gap:7px"><button class="friendbtn" onclick="confirmFriend()">Confirm</button><button class="friendbtn gray" onclick="document.getElementById('req').remove()">Delete</button></div>
- </div>
- <div class="panel">
-  <div class="side-title">Contacts</div>
-  <div class="contact"><div class="av">SA</div>Sarah Ahmed <span class="dot"></span></div>
-  <div class="contact"><div class="av">AB</div>Abir Hasan <span class="dot"></span></div>
-  <div class="contact"><div class="av">JA</div>Jannat Akter <span class="dot"></span></div>
-  <div class="contact"><div class="av">RK</div>Rocky Khan <span class="dot"></span></div>
- </div>
-</aside>
+<!-- ================= LOGIN / AUTH VIEW ================= -->
+<div id="auth-container">
+    <div class="auth-box">
+        <h1>Connectly</h1>
+        <input type="email" id="login-email" placeholder="Email address or phone number">
+        <input type="password" id="login-pass" placeholder="Password">
+        <button class="btn-login" onclick="emailLogin()">Log In</button>
+        <hr style="margin: 15px 0; border:0; border-top:1px solid #ddd;">
+        <button class="btn-google" onclick="googleLogin()">Sign in with Google</button>
+    </div>
 </div>
 
-<div class="modal" id="modal"><div class="box" id="box"></div></div><div class="toast" id="toast"></div>
+<!-- ================= MAIN APP VIEW ================= -->
+<div id="app-container">
+    <header class="top">
+        <div class="brand">Connectly</div>
+        <input class="search" id="search" placeholder="Search Connectly..." oninput="searchFeed()">
+        <nav class="topnav">
+            <button class="icon" onclick="goHome()">⌂</button>
+            <button class="icon" onclick="toast('Notifications')">🔔</button>
+            <button class="icon" onclick="toast('Messenger')">💬</button>
+            <button class="icon" onclick="logout()">🚪</button>
+            <div class="av" id="user-avatar">MR</div>
+        </nav>
+    </header>
+
+    <div class="wrap">
+        <aside class="left">
+         <div class="panel menu">
+          <div class="mi" onclick="toast('Profile opened')">👤 My Profile</div>
+          <div class="mi" onclick="toast('Friends section')">👥 Friends</div>
+          <div class="mi" onclick="toast('Groups section')">👨‍👩‍👧 Groups</div>
+          <div class="mi" onclick="toast('Marketplace')">🛒 Marketplace</div>
+          <div class="mi" onclick="logout()">🚪 Log out</div>
+         </div>
+        </aside>
+
+        <main id="main">
+         <div class="card stories">
+          <div class="story"><div class="av">MR</div>Your Story</div>
+          <div class="story"><div class="av" style="background:red">SA</div>Sarah</div>
+          <div class="story"><div class="av" style="background:green">RK</div>Rocky</div>
+         </div>
+
+         <div class="card composer">
+          <div class="row"><div class="av" id="composer-av">MR</div><div class="fakeinput" onclick="createPost()">What's on your mind?</div></div>
+          <div class="quick">
+              <button onclick="createPost()">📹 Live Video</button>
+              <button onclick="createPost()">🖼️ Photo/Video</button>
+              <button onclick="createPost()">😊 Feeling</button>
+          </div>
+         </div>
+
+         <div id="feed">
+            <!-- Firebase Post List -->
+         </div>
+        </main>
+
+        <aside class="right">
+         <div class="panel">
+          <div class="side-title">Contacts</div>
+          <div class="contact"><div class="av">SA</div>Sarah Ahmed <span class="dot"></span></div>
+          <div class="contact"><div class="av">AB</div>Abir Hasan <span class="dot"></span></div>
+         </div>
+        </aside>
+    </div>
+</div>
+
+<div class="modal" id="modal"><div class="box" id="box"></div></div>
+<div class="toast" id="toast"></div>
 
 <script>
-// --- FIREBASE CONFIGURATION ---
-// আপনার Firebase Console থেকে পাওয়া কনফিগারেশন এখানে বসাবেন
+// --- FIREBASE CONFIGURATION (এখানে আপনার প্রজেক্টের রিয়েল কনফিগারেশন দিন) ---
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -87,77 +153,143 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID"
 };
 
-// Firebase ইনিশিয়ালাইজ করা
 firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 const db = firebase.firestore();
 
-const modal=document.getElementById('modal'),box=document.getElementById('box');
-function openBox(html){box.innerHTML=html;modal.classList.add('show')}
-function closeBox(){modal.classList.remove('show')}
-modal.onclick=e=>{if(e.target===modal)closeBox()}
+let currentUser = null;
 
-function createPost(){
-    openBox(`<div class="mh"><h2>Create Post</h2><button class="close" onclick="closeBox()">✕</button></div><div class="row"><div class="av">MR</div><b>MR Rocky</b></div><textarea id="posttext" placeholder="What's on your mind?"></textarea><div class="row" style="margin-top:8px"><button class="friendbtn gray" onclick="toast('Photo picker demo')">🖼️ Photo</button><button class="friendbtn gray" onclick="toast('Feeling picker demo')">😊 Feeling</button><button class="friendbtn gray" onclick="toast('Privacy: Public')">🌎 Public</button></div><button class="primary" onclick="publish()">Post</button>`)
+// --- AUTH STATE OBSERVER ---
+auth.onAuthStateChanged(user => {
+    if (user) {
+        currentUser = user;
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('app-container').style.display = 'block';
+        
+        let initials = user.displayName ? user.displayName.substring(0, 2).toUpperCase() : "MR";
+        document.getElementById('user-avatar').textContent = initials;
+        document.getElementById('composer-av').textContent = initials;
+        
+        loadFeed();
+    } else {
+        currentUser = null;
+        document.getElementById('auth-container').style.display = 'flex';
+        document.getElementById('app-container').style.display = 'none';
+    }
+});
+
+// --- GOOGLE & EMAIL LOGIN ---
+function googleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).catch(e => toast(e.message));
 }
 
-// Firebase-এ পোস্ট সেভ করার লজিক
-async function publish(){
-    let t = document.getElementById('posttext').value.trim();
-    if(!t) return toast('Write something first');
+function emailLogin() {
+    let email = document.getElementById('login-email').value;
+    let pass = document.getElementById('login-pass').value;
+    if(!email || !pass) return toast('Please fill in all fields');
     
+    auth.signInWithEmailAndPassword(email, pass).catch(e => {
+        // যদি একাউন্ট না থাকে তবে অটো ক্রিয়েট করে ফেলবে (Sign up fallback)
+        auth.createUserWithEmailAndPassword(email, pass).catch(err => toast(err.message));
+    });
+}
+
+function logout() {
+    auth.signOut();
+}
+
+// --- POST CREATION & FIRESTORE ---
+const modal = document.getElementById('modal'), box = document.getElementById('box');
+function openBox(html) { box.innerHTML = html; modal.classList.add('show'); }
+function closeBox() { modal.classList.remove('show'); }
+modal.onclick = e => { if (e.target === modal) closeBox(); }
+
+function createPost() {
+    openBox(`
+        <div class="mh"><h2>Create Post</h2><button class="close" onclick="closeBox()">✕</button></div>
+        <div class="row"><div class="av">ME</div><b>${currentUser.displayName || currentUser.email}</b></div>
+        <textarea id="posttext" placeholder="What's on your mind?"></textarea>
+        <button class="primary" onclick="publish()">Post</button>
+    `);
+}
+
+async function publish() {
+    let text = document.getElementById('posttext').value.trim();
+    if (!text) return toast('Write something first');
+
     try {
         await db.collection("posts").add({
-            text: t,
-            userName: "MR Rocky",
+            text: text,
+            userName: currentUser.displayName || currentUser.email.split('@')[0],
             likes: 0,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
         closeBox();
-        toast('Post published successfully!');
-    } catch(e) {
-        console.error("Error adding post: ", e);
-        toast('Failed to publish post');
+        toast('Post published!');
+    } catch (e) {
+        toast('Error publishing post');
     }
 }
 
-// রিয়েল-টাইমে Firebase থেকে পোস্ট লোড করা
-db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
-    let feedHTML = '';
-    snapshot.forEach((doc) => {
-        let post = doc.data();
-        feedHTML += `
-        <article class="card post">
-         <div class="posthead"><div class="av">MR</div><div><b>${esc(post.userName)}</b><br><span class="small">Just now · 🌎</span></div></div>
-         <div class="body">${esc(post.text)}</div>
-         <div class="stats"><span class="likes">👍 ${post.likes || 0}</span><span>0 comments · 0 shares</span></div>
-         <div class="postactions"><button onclick="like(this)">👍 Like</button><button onclick="commentBox(this)">💬 Comment</button><button onclick="share()">↗ Share</button></div>
-         <div class="comments"><input placeholder="Write a comment..." onkeydown="addComment(event,this)"></div><div class="commentlist"></div>
-        </article>`;
+// --- REAL-TIME FEED LOADER ---
+function loadFeed() {
+    db.collection("posts").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+        let feedHTML = '';
+        snapshot.forEach(doc => {
+            let post = doc.data();
+            feedHTML += `
+            <article class="card post">
+             <div class="posthead"><div class="av">${post.userName.substring(0,2).toUpperCase()}</div><div><b>${esc(post.userName)}</b><br><span class="small">Just now · 🌎</span></div></div>
+             <div class="body">${esc(post.text)}</div>
+             <div class="stats"><span class="likes">👍 ${post.likes || 0}</span><span>0 comments</span></div>
+             <div class="postactions"><button onclick="like(this)">👍 Like</button><button onclick="commentBox(this)">💬 Comment</button><button onclick="toast('Shared')">↗ Share</button></div>
+             <div class="comments"><input placeholder="Write a comment..." onkeydown="addComment(event,this)"></div>
+             <div class="commentlist"></div>
+            </article>`;
+        });
+        document.getElementById('feed').innerHTML = feedHTML;
     });
-    document.getElementById('feed').innerHTML = feedHTML;
-});
-
-function like(b){
-    b.classList.toggle('active');
-    let s=b.closest('.post').querySelector('.likes'),n=parseInt(s.textContent.replace(/\D/g,''))||0;
-    s.textContent='👍 '+(n+(b.classList.contains('active')?1:-1))
 }
-function commentBox(b){let c=b.closest('.post').querySelector('.comments');c.style.display=c.style.display==='block'?'none':'block';if(c.style.display==='block')c.querySelector('input').focus()}
-function addComment(e,i){if(e.key!=='Enter'||!i.value.trim())return;let d=document.createElement('div');d.className='bubble';d.innerHTML='<b>MR Rocky</b> '+esc(i.value.trim());i.closest('.post').querySelector('.commentlist').appendChild(d);i.value='';toast('Comment added')}
-function share(){toast('Post shared successfully')}
-function profile(){openBox(`<div class="mh"><h2>My Profile</h2><button class="close" onclick="closeBox()">✕</button></div><div class="profile"><div class="big">MR</div><h2>MR Rocky</h2><p class="small">1.2K Friends · 48 Posts</p><button class="friendbtn" onclick="editProfile()">Edit Profile</button><div class="tabs"><button>Posts</button><button>Friends</button><button>Photos</button></div></div>`)}
-function editProfile(){openBox(`<div class="mh"><h2>Edit Profile</h2><button class="close" onclick="closeBox()">✕</button></div><div class="form"><label>Name</label><input value="MR Rocky"><label>Bio</label><input value="Welcome to my Connectly profile"><label>Location</label><input value="Bangladesh"><button class="primary" onclick="toast('Profile updated');closeBox()">Save Changes</button></div>`)}
-function notifications(){openBox(`<div class="mh"><h2>Notifications</h2><button class="close" onclick="closeBox()">✕</button></div><div class="chatrow">👍 Sarah Ahmed liked your post.</div><div class="chatrow">💬 Abir commented on your post.</div><div class="chatrow">👥 Jannat sent you a friend request.</div><div class="chatrow">❤️ You have a new reaction.</div>`)}
-function messages(){openBox(`<div class="mh"><h2>Messenger</h2><button class="close" onclick="closeBox()">✕</button></div><div class="chatrow">🟢 Sarah Ahmed — Online</div><div class="chatrow">🟢 Abir Hasan — Online</div><div class="chatrow">🟢 Jannat Akter — Online</div><button class="primary" onclick="chatDemo()">Open Chat</button>`)}
-function chatDemo(){openBox(`<div class="mh"><h2>Sarah Ahmed</h2><button class="close" onclick="closeBox()">✕</button></div><div style="background:#f0f2f5;padding:15px;border-radius:10px"><div class="chatrow">Sarah: Hi! 👋</div><div class="chatrow" style="text-align:right">You: Hello! How are you?</div></div><input id="msg" style="width:100%;padding:11px;border:1px solid #ddd;border-radius:20px;margin-top:10px" placeholder="Type a message..." onkeydown="sendMsg(event,this)">`)}
-function sendMsg(e,i){if(e.key==='Enter'&&i.value.trim()){toast('Message sent');i.value=''}}
-function settings(){openBox(`<div class="mh"><h2>Settings</h2><button class="close" onclick="closeBox()">✕</button></div><div class="mi">🔐 Privacy & Security</div><div class="mi">🔔 Notifications</div><div class="mi">🌙 Appearance</div><div class="mi">🌐 Language</div><button class="primary" onclick="toast('Settings saved');closeBox()">Save</button>`)}
-function confirmFriend(){document.getElementById('req').innerHTML='<div class="av">JA</div><b>Jannat Akter — Friends ✓</b>';toast('Friend request accepted')}
-function searchFeed(){let q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.post').forEach(p=>p.style.display=p.innerText.toLowerCase().includes(q)?'block':'none')}
-function goHome(){window.scrollTo({top:0,behavior:'smooth'});toast('Home')}
-function logout(){toast('Demo logout — backend authentication not connected')}
-function toast(x){let t=document.getElementById('toast');t.textContent=x;t.classList.add('show');setTimeout(()=>t.classList.0,1800)}
-function esc(s){let d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+function like(b) {
+    b.classList.toggle('active');
+    let s = b.closest('.post').querySelector('.likes'), n = parseInt(s.textContent.replace(/\D/g, '')) || 0;
+    s.textContent = '👍 ' + (n + (b.classList.contains('active') ? 1 : -1));
+}
+
+function commentBox(b) {
+    let c = b.closest('.post').querySelector('.comments');
+    c.style.display = c.style.display === 'block' ? 'none' : 'block';
+    if(c.style.display === 'block') c.querySelector('input').focus();
+}
+
+function addComment(e, i) {
+    if (e.key !== 'Enter' || !i.value.trim()) return;
+    let d = document.createElement('div');
+    d.className = 'bubble';
+    d.innerHTML = `<b>${currentUser.displayName || 'User'}</b> ` + esc(i.value.trim());
+    i.closest('.post').querySelector('.commentlist').appendChild(d);
+    i.value = '';
+    toast('Comment added');
+}
+
+function searchFeed() {
+    let q = document.getElementById('search').value.toLowerCase();
+    document.querySelectorAll('.post').forEach(p => p.style.display = p.innerText.toLowerCase().includes(q) ? 'block' : 'none');
+}
+
+function goHome() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function toast(x) {
+    let t = document.getElementById('toast');
+    t.textContent = x; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1800);
+}
+function esc(s) {
+    let d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
 </script>
 </body>
 </html>
